@@ -1,7 +1,7 @@
 import pygame
 import os
 import source.constant as C
-from source.game_state import boss
+from source.game_state.boss import Boss
 
 class Game:
     def __init__(self, state_dict, start_state):
@@ -21,7 +21,7 @@ class Game:
             next_state = self.state.next
             self.state.finished = False
             if next_state == 'boss':
-                self.state = boss.Boss(self.state.Marisa)
+                self.state = Boss(self.state.Marisa, self.state.fire_state)
             else:
                 self.state = self.state_dict[next_state]
             # 根据不同的状态，播放不同的BGM
@@ -42,7 +42,18 @@ class Game:
                 pygame.mixer.music.load(music_file)
                 pygame.mixer.music.play(-1)
                 pygame.mixer.music.set_volume(0.3)
-            # exit是死亡后结束的
+            elif next_state == 'boss':
+                pygame.mixer.music.stop()
+                music_file = C.boss_bgm
+                pygame.mixer.music.load(music_file)
+                pygame.mixer.music.play(-1)
+                pygame.mixer.music.set_volume(0.3)
+            elif next_state == 'success':
+                pygame.mixer.music.stop()
+                music_file = C.success_bgm
+                pygame.mixer.music.load(music_file)
+                pygame.mixer.music.play(-1)
+                pygame.mixer.music.set_volume(0.5)
             elif next_state == 'exit':
                 pygame.mixer.music.stop()
                 pygame.quit()

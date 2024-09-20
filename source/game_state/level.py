@@ -54,7 +54,7 @@ class Level:
         self.score_points = []
         self.power_points = []
         self.enemys = []
-        self.enemy_summon = EnemySummon(self.enemys)
+        self.enemy_summon = EnemySummon(self.enemys, self.enemy_bullets)
 
     # 用来展示右边的信息
     def show_info(self, surface):
@@ -204,5 +204,7 @@ class Level:
         self.bonus()
         self.update_enemys(surface)
         self.update_bullets(surface)
-        if pygame.time.get_ticks() > 100 * C.s:
+        # if pygame.time.get_ticks() > 60000:
+        #     self.finished = True
+        if pygame.time.get_ticks() > 1000:
             self.finished = True

@@ -1,5 +1,5 @@
 import pygame
-
+import math
 from source.bullets.big_bullet_blue import BigBulletBlue
 from source.bullets.star_bullet import StarBullet
 from source.charactors import enemy
@@ -26,7 +26,8 @@ class Spirit2Left1(enemy.Enemy):
             self.times += 1
         if self.times == 24:
             self.times = 0
-            enemy_bullets.append(StarBullet(self.x, self.y, player_x, player_y, 3))
+            angle = math.degrees(math.atan2(player_y - self.y, player_x - self.x))
+            enemy_bullets.append(StarBullet(self.x, self.y, angle, 3))
 
     def get_rect(self, x, y):
         return pygame.Rect((x * 32, y * 32, 32, 32))
@@ -50,7 +51,8 @@ class Spirit2Left2(enemy.Enemy):
             self.times += 1
         if self.times == 30:
             self.times = 0
-            enemy_bullets.append(GlowingBullet(self.x, self.y, player_x, player_y, 3))
+            angle = math.degrees(math.atan2(player_y - self.y, player_x - self.x))
+            enemy_bullets.append(GlowingBullet(self.x, self.y, angle, 3))
 
     def get_rect(self, x, y):
         return pygame.Rect((x * 32, y * 32, 32, 32))

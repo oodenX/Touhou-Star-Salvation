@@ -1,8 +1,7 @@
 import pygame
 
-from source.game_state import main_menu, level, dialogue, boss, failure
+from source.game_state import main_menu, level, dialogue, boss, failure, success
 from source import tools
-from source.game_state import *
 
 def main():
     # pygame初始化
@@ -12,7 +11,8 @@ def main():
         'main_menu': main_menu.MainMenu(),
         'dialogue': dialogue.Dialogue(),
         'level': level.Level(),
-        'failure': failure.Failure()
+        'failure': failure.Failure(),
+        'success': success.Success()
     }
     game = tools.Game(state_dict, 'main_menu')
     game.run()

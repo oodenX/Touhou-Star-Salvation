@@ -6,7 +6,6 @@ class Bullet(pygame.sprite.Sprite):
     def __init__(self, x, y, target_x, target_y, speed, half_width, radius):
         pygame.sprite.Sprite.__init__(self)
         # 这里的子弹的坐标是子弹正中心的坐标，目标坐标也是目标的正中心坐标
-        self.timer = pygame.time.get_ticks()
         self.x = x
         self.y = y
         self.target_x = target_x

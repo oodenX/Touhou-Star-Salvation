@@ -1,9 +1,10 @@
 import pygame
-
+import math
 from source.bullets.big_bullet_blue import BigBulletBlue
-from source.charactors import enemy
+from source.bullets.big_bullet_yellow import BigBulletYellow
 from source.bullets.glowing_bullet import GlowingBullet
 from source.bullets.circle_bullet import CircleBullet
+from source.charactors import enemy
 
 class ButterflyRight1(enemy.Enemy):
     def __init__(self, x, y, target_x, target_y, speed):
@@ -23,14 +24,8 @@ class ButterflyRight1(enemy.Enemy):
 
         if self.times == 24:
             self.times = 0
-            enemy_bullets.append(BigBulletYellow(self.x, self.y, self.x, self.y + 8, 3))
-            enemy_bullets.append(BigBulletYellow(self.x, self.y, self.x, self.y - 8, 3))
-            enemy_bullets.append(BigBulletYellow(self.x, self.y, self.x + 8, self.y, 3))
-            enemy_bullets.append(BigBulletYellow(self.x, self.y, self.x - 8, self.y, 3))
-            enemy_bullets.append(BigBulletYellow(self.x, self.y, self.x - 8, self.y - 8, 3))
-            enemy_bullets.append(BigBulletYellow(self.x, self.y, self.x - 8, self.y + 8, 3))
-            enemy_bullets.append(BigBulletYellow(self.x, self.y, self.x + 8, self.y - 8, 3))
-            enemy_bullets.append(BigBulletYellow(self.x, self.y, self.x + 8, self.y + 8, 3))
+            for angle in range(0, 360, 45):
+                enemy_bullets.append(BigBulletYellow(self.x, self.y, angle, 3))
 
 class ButterflyRight2(enemy.Enemy):
     def __init__(self, x, y, target_x, target_y, speed):
@@ -49,7 +44,8 @@ class ButterflyRight2(enemy.Enemy):
             self.times += 1
         if self.times == 32:
             self.times = 0
-            enemy_bullets.append(CircleBullet(self.x, self.y, player_x, player_y, 3))
+            angle = math.degrees(math.atan2(player_y - self.y, player_x - self.x))
+            enemy_bullets.append(CircleBullet(self.x, self.y, angle, 3))
 
 class ButterflyRight3(enemy.Enemy):
     def __init__(self, x, y, target_x, target_y, speed):
@@ -68,4 +64,5 @@ class ButterflyRight3(enemy.Enemy):
             self.times += 1
         if self.times == 32:
             self.times = 0
-            enemy_bullets.append(GlowingBullet(self.x, self.y, player_x, player_y, 3))
+            angle = math.degrees(math.atan2(player_y - self.y, player_x - self.x))
+            enemy_bullets.append(GlowingBullet(self.x, self.y, angle, 3))
