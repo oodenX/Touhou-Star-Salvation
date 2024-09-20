@@ -1,4 +1,5 @@
 import pygame
+import math
 from .. import constant as C
 from .. import tools
 from ..bullets.main_bullet import Bullet
@@ -68,25 +69,26 @@ class Marisa(pygame.sprite.Sprite):
 
     def shooting(self, surface, keys):
         if keys[pygame.K_z]:
-            if pygame.time.get_ticks() - self.timer > 150:
+            if pygame.time.get_ticks() - self.timer > 180:
                 self.timer = pygame.time.get_ticks()
                 self.bullet_kind += 1
-                if self.power >= 1.00 and self.power < 2.00:
+                power_level = math.floor(self.power)
+                if power_level == 1:
                     bullet = Bullet(self.position_x, self.position_y)
                     self.bullets.append(bullet)
-                elif self.power >= 2.00 and self.power < 3.00:
+                elif power_level == 2:
                     bullet = Bullet(self.position_x - 8, self.position_y)
                     self.bullets.append(bullet)
                     bullet = Bullet(self.position_x + 8, self.position_y)
                     self.bullets.append(bullet)
-                elif self.power >= 3.00 and self.power < 4.00:
+                elif power_level == 3:
                     bullet = Bullet(self.position_x - 7, self.position_y)
                     self.bullets.append(bullet)
                     bullet = Bullet(self.position_x, self.position_y - 4)
                     self.bullets.append(bullet)
                     bullet = Bullet(self.position_x + 7, self.position_y)
                     self.bullets.append(bullet)
-                elif self.power >= 4.00:
+                elif power_level >= 4:
                     bullet = Bullet(self.position_x - 12, self.position_y)
                     self.bullets.append(bullet)
                     bullet = Bullet(self.position_x + 12, self.position_y)
@@ -106,3 +108,7 @@ class Marisa(pygame.sprite.Sprite):
         self.shooting(surface, keys)
         if self.power > 4.00:
             self.power = 4.00
+        if self.power < 1.00:
+            self.power = 1.00
+        if self.life > 5:
+            self.life = 5

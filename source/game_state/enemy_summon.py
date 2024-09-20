@@ -25,6 +25,8 @@ from ..charactors.spirit4_down import Spirit4Down1, Spirit4Down2
 from ..charactors.spirit4_left import Spirit4Left1, Spirit4Left2
 from ..charactors.spirit4_right import Spirit4Right1, Spirit4Right2
 from ..charactors.spirit5 import Spirit5Down, Spirit5Right, Spirit5Left
+from ..charactors.spirit6 import Spirit6
+from ..charactors.spirit7 import Spirit7
 from ..bullets.small_star_bullet import SmallStarBullet
 from ..bullets.satsu_bullet import SatsuBullet
 
@@ -69,14 +71,6 @@ class EnemySummon:
         self.thirty_four_down = False
         self.thirty_five_down = False
         self.thirty_six_down = False
-        self.thirty_seven_down = False
-        self.thirty_eight_down = False
-        self.thirty_nine_down = False
-        self.forty_down = False
-        self.forty_one_down = False
-        self.forty_two_down = False
-        self.forty_three_down = False
-        self.forty_four_down = False
 
     def update(self):
         # 第一波出现六只小精灵从左到右
@@ -399,3 +393,35 @@ class EnemySummon:
             self.enemys.append(Spirit5Down(300, 30, 300, 30, 1))
             self.enemys.append(Spirit5Left(600, 30, 600, 30, 1))
             self.enemys.append(Spirit5Right(100, 30, 100, 30, 1))
+
+class Summon(EnemySummon):
+    def __init__(self, enemys, bullets):
+        super().__init__(enemys, bullets)
+        self.thirty_seven_down = False
+        self.thirty_eight_down = False
+        self.thirty_nine_down = False
+
+
+
+    def update(self):
+        super().update()
+        self.fifteenth_wave()
+        self.sixteenth_wave()
+
+    def fifteenth_wave(self):
+        if pygame.time.get_ticks() - self.timer > 40000 and not self.thirty_seven_down:
+            self.thirty_seven_down = True
+            spirit6_1 = Spirit6(100, 50, 100, 50, 0)
+            spirit6_2 = Spirit6(300, 50, 300, 50, 0)
+            spirit6_3 = Spirit6(500, 50, 500, 50, 0)
+            self.enemys.append(spirit6_1)
+            self.enemys.append(spirit6_2)
+            self.enemys.append(spirit6_3)
+
+    def sixteenth_wave(self):
+        if pygame.time.get_ticks() - self.timer > 50000 and not self.thirty_eight_down:
+            self.thirty_eight_down = True
+            spirit7_1 = Spirit7(random.randint(0, 640), random.randint(300, 480), 320, 240, 2)
+            spirit7_2 = Spirit7(random.randint(0, 640), random.randint(300, 480), 320, 240, 2)
+            spirit7_3 = Spirit7(random.randint(0, 640), random.randint(300, 480), 320, 240, 2)
+            self.enemys.extend([spirit7_1, spirit7_2, spirit7_3])

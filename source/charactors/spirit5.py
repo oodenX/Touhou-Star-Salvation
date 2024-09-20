@@ -64,7 +64,7 @@ class Spirit5Right(enemy.Enemy):
 
     def shooting(self, surface, player_bullets, enemy_bullets, player_x=0, player_y=0):
         super().update(surface, player_bullets)
-        if pygame.time.get_ticks() - self.timer >= 2000:  # 每两秒
+        if pygame.time.get_ticks() - self.timer >= 500:  # 每两秒
             self.timer = pygame.time.get_ticks()
             for angle in range(0, 360, 15):  # 每15度发射一个子弹
                 enemy_bullets.append(GlowingBullet(self.x, self.y, angle, 2))

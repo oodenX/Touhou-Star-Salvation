@@ -39,6 +39,7 @@ sanae1_image = './resources/enemy/sanae1.png'
 sanae2_image = './resources/enemy/sanae2.png'
 sanae3_image = './resources/enemy/sanae3.png'
 magic_circle_image = './resources/enemy/magic_circle.png'
+sanae_change_sound = './resources/sound/se_slash.wav'
 
 # 关卡的左边和右边的背景图
 level_background1 = './resources/background/level_background_left.png'
@@ -49,6 +50,7 @@ score_text = './resources/text/score_text.png'
 life_text = './resources/text/life_text.png'
 spell_text = './resources/text/spell_text.png'
 power_text = './resources/text/power_text.png'
+heart = './resources/text/heart.png'
 
 # 玩家的图标
 player_image = './resources/player/player_image.png'

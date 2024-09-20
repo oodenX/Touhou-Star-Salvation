@@ -1,7 +1,7 @@
 import random
 
 import pygame
-from .enemy_summon import EnemySummon
+from .enemy_summon import EnemySummon, Summon
 from .. import constant as C
 from ..charactors import myself
 from ..items.score_point import ScorePoint
@@ -39,6 +39,7 @@ class Level:
         self.score_text = pygame.image.load(C.score_text)
         self.power_text = pygame.image.load(C.power_text)
         self.Marisa = myself.Marisa()
+        self.heart_image = pygame.image.load(C.heart)
         self.damage_sound = pygame.mixer.Sound(C.damage_sound)
         self.fire_state = 2
         self.i = 0
@@ -54,23 +55,21 @@ class Level:
         self.score_points = []
         self.power_points = []
         self.enemys = []
-        self.enemy_summon = EnemySummon(self.enemys, self.enemy_bullets)
+        self.enemy_summon = Summon(self.enemys, self.enemy_bullets)
 
     # 用来展示右边的信息
     def show_info(self, surface):
         font = pygame.font.SysFont('Arial', 36)
         score_text = font.render(str(self.Marisa.score), True, (0, 0, 0))
-        life_text = font.render(str(self.Marisa.life), True, (0, 0, 0))
-        spell_text = font.render(str(self.Marisa.spell), True, (0, 0, 0))
         power_text = font.render(f'{self.Marisa.power:.2f}', True, (0, 0, 0))
-        surface.blit(self.life_text, (680, 64))
-        surface.blit(life_text, (755, 54))
-        surface.blit(self.spell_text, (680, 108))
-        surface.blit(spell_text, (740, 98))
         surface.blit(self.score_text, (670, 24))
         surface.blit(score_text, (740, 14))
         surface.blit(self.power_text, (660, 200))
         surface.blit(power_text, (740, 200))
+
+        surface.blit(self.life_text, (680, 64))
+        for i in range(self.Marisa.life):
+            surface.blit(self.heart_image, (755 + i * 40, 54))
 
     # 用来展示背景
     def show_background(self, surface):
@@ -121,6 +120,7 @@ class Level:
             self.Marisa.invincibility = True
             self.timer3 = pygame.time.get_ticks()
             self.Marisa.life -= 1
+            self.Marisa.power -= 0.5
             self.damage_sound.play()
 
     # 用来计算与Marisa之间的距离
@@ -159,6 +159,7 @@ class Level:
         surface.blit(player_image, (self.Marisa.position_x, self.Marisa.position_y))
         if self.Marisa.rate == 0.5:
             surface.blit(self.Marisa.point, (self.Marisa.position_x - 16, self.Marisa.position_y - 8))
+
 
     # 获得得分和火力点的方法
     def bonus(self):
@@ -204,7 +205,5 @@ class Level:
         self.bonus()
         self.update_enemys(surface)
         self.update_bullets(surface)
-        # if pygame.time.get_ticks() > 60000:
-        #     self.finished = True
-        if pygame.time.get_ticks() > 1000:
+        if pygame.time.get_ticks() > 1 * C.s:
             self.finished = True

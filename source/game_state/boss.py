@@ -39,6 +39,7 @@ class Boss:
         self.spell_text = pygame.image.load(C.spell_text)
         self.score_text = pygame.image.load(C.score_text)
         self.power_text = pygame.image.load(C.power_text)
+        self.heart_image = pygame.image.load(C.heart)
         self.Sanae = Sanae()
         self.Marisa = Marisa
         self.damage_sound = pygame.mixer.Sound(C.damage_sound)
@@ -51,6 +52,10 @@ class Boss:
         self.timer5 = 0
         self.moving_state_num = 0
         self.finished = False
+        self.state1_bonus = False
+        self.state2_bonus = False
+        self.state3_bonus = False
+        self.state4_bonus = False
         self.next = 'failure'   # 输了才是failure
         self.enemy_bullets = []
         self.score_points = []
@@ -61,17 +66,15 @@ class Boss:
     def show_info(self, surface):
         font = pygame.font.SysFont('Arial', 36)
         score_text = font.render(str(self.Marisa.score), True, (0, 0, 0))
-        life_text = font.render(str(self.Marisa.life), True, (0, 0, 0))
-        spell_text = font.render(str(self.Marisa.spell), True, (0, 0, 0))
         power_text = font.render(f'{self.Marisa.power:.2f}', True, (0, 0, 0))
-        surface.blit(self.life_text, (680, 64))
-        surface.blit(life_text, (755, 54))
-        surface.blit(self.spell_text, (680, 108))
-        surface.blit(spell_text, (740, 98))
         surface.blit(self.score_text, (670, 24))
         surface.blit(score_text, (740, 14))
         surface.blit(self.power_text, (660, 200))
         surface.blit(power_text, (740, 200))
+
+        surface.blit(self.life_text, (680, 64))
+        for i in range(self.Marisa.life):
+            surface.blit(self.heart_image, (755 + i * 40, 54))
 
     # 用来展示背景
     def show_background(self, surface):
@@ -91,6 +94,24 @@ class Boss:
             self.moving_state_num += 1
             if self.moving_state_num == 8:
                 self.moving_state_num = 0
+
+    def sanae_bonus(self):
+        if self.Sanae.state == 1 and self.state1_bonus == False:
+            self.state1_bonus = True
+            self.Marisa.score += int(10000 * self.Marisa.power)
+            self.Marisa.power += 0.5
+        if self.Sanae.state == 2 and self.state2_bonus == False:
+            self.state2_bonus = True
+            self.Marisa.score += int(10000 * self.Marisa.power)
+            self.Marisa.power += 0.5
+        if self.Sanae.state == 3 and self.state3_bonus == False:
+            self.state3_bonus = True
+            self.Marisa.score += int(10000 * self.Marisa.power)
+            self.Marisa.power += 0.5
+        if self.Sanae.state == 4 and self.state4_bonus == False:
+            self.state4_bonus = True
+            self.Marisa.score += int(10000 * self.Marisa.power)
+            self.Marisa.power += 0.5
 
     # 用来展示火焰动画的方法
     def fire_show(self, surface):
@@ -122,6 +143,7 @@ class Boss:
             self.Marisa.invincibility = True
             self.timer3 = pygame.time.get_ticks()
             self.Marisa.life -= 1
+            self.Marisa.power -= 0.5
             self.damage_sound.play()
 
     # 用来计算与Marisa之间的距离
@@ -163,11 +185,12 @@ class Boss:
 
     # 获得得分和火力点的方法
     def bonus(self):
-        # 每过三秒出现一个得分点和火力点:
-        if self.time_waiting(self.timer4, 3 * C.s):
+        # 每过两秒出现一个得分点和火力点:
+        if self.time_waiting(self.timer4, 2 * C.s):
             self.timer4 = pygame.time.get_ticks()
             score_point = ScorePoint()
             power_point = PowerPoint()
+            self.score_points.append(score_point)
             self.score_points.append(score_point)
             self.power_points.append(power_point)
 
@@ -208,6 +231,7 @@ class Boss:
         self.fire_show(surface)
         self.is_invincibility()
         self.bonus()
+        self.sanae_bonus()
         self.Sanae.update(surface, self.Marisa.bullets, self.Marisa, self.enemy_bullets)
         self.update_bullets(surface)
         self.success()
