@@ -1,7 +1,5 @@
 import math
-
 import pygame
-
 
 # 敌人的父类
 class Enemy(pygame.sprite.Sprite):
@@ -35,6 +33,7 @@ class Enemy(pygame.sprite.Sprite):
         dy = dy * (self.speed / distance) if distance != 0 else 0
         return dx, dy
 
+    # 敌人运动的动画
     def time_waiting(self):
         if pygame.time.get_ticks() - self.timer2 > 50:
             self.timer2 = pygame.time.get_ticks()
@@ -44,17 +43,16 @@ class Enemy(pygame.sprite.Sprite):
             self.moving_state_num += 1
             if self.moving_state_num == len(self.images):
                 self.moving_state_num = 0
-
+    # 判断敌人是否死亡
     def is_dead(self):
         return self.hp <= 0 or self.out_of_screen()
 
+
+    # 判断是否击中目标
     def is_hit(self, x, y):
-        """
-        判断是否击中目标
-        """
         return (self.x - x) * (self.x - x) + (self.y - y) * (self.y - y) <= self.size * self.size
 
-
+    # 判断是否被击中
     def check_hit(self, bullets):
         for bullet in bullets:
             if self.is_hit(bullet.center_x, bullet.center_y):
@@ -64,9 +62,11 @@ class Enemy(pygame.sprite.Sprite):
             if self.is_dead():
                 return
 
+    # 判断是否出界
     def out_of_screen(self):
         return self.x < 0 or self.x > 640 or self.y < 0 or self.y > 720
 
+    # 更新敌人的方法
     def update(self, surface, bullets):
         if pygame.time.get_ticks() - self.timer1 > 200:
             self.timer1 = pygame.time.get_ticks()

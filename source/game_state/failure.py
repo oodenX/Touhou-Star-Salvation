@@ -14,4 +14,4 @@ class Failure:
         if keys[pygame.K_ESCAPE]:
             self.next = 'exit'
             self.finished = True
-            print('玩的愉快')
+            print('再试一次吧！')

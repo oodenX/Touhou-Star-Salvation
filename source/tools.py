@@ -78,23 +78,3 @@ class Game:
             pygame.display.update()
             # 游戏的fps最多60
             self.clock.tick(C.fps)
-
-def load_graphic(path, accept=('.jpg', '.png', '.bmp', '.gif')):
-    graphic = {}
-    for pic in os.listdir(path):
-        name, ext = os.path.splitext(pic)
-        if ext.lower() in accept:
-            img = pygame.image.load(os.path.join(path, pic))
-            if img.get_alpha():
-                img = img.convert_alpha()
-            else:
-                img = img.convert()
-            graphic[name] = img
-    return graphic
-
-
-def get_image(sheet, x, y, width, height):
-    image = pygame.Surface((width, height))
-    # 然后是抠图，把sheet从x,y位置抠width和height
-    image.blit(sheet, (x, y), (0, 0, width, height))
-    return image

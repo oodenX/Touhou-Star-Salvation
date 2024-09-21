@@ -30,6 +30,7 @@ class Marisa(pygame.sprite.Sprite):
         self.max_y = 672  # 720 - 48
         self.bullets = []
 
+    # 人物的动画
     def moving_animation(self, i, keys):
         if keys[pygame.K_LEFT]:
             return pygame.Rect((i * 32, 48, 32, 48))
@@ -62,11 +63,13 @@ class Marisa(pygame.sprite.Sprite):
             self.center_y = self.position_y + 24
         self.out_of_bounds()
 
+
+    # 检查是否出界
     def out_of_bounds(self):
-        # 检查是否出界
         self.position_x = max(self.min_x, min(self.position_x, self.max_x))
         self.position_y = max(self.min_y, min(self.position_y, self.max_y))
 
+    # 人物的射击方法
     def shooting(self, surface, keys):
         if keys[pygame.K_z]:
             if pygame.time.get_ticks() - self.timer > 180:
@@ -103,6 +106,7 @@ class Marisa(pygame.sprite.Sprite):
             else:
                 self.bullets.remove(bullet)
 
+    # 更新人物的方法
     def update(self, surface, keys):
         self.moving(keys)
         self.shooting(surface, keys)
@@ -110,5 +114,3 @@ class Marisa(pygame.sprite.Sprite):
             self.power = 4.00
         if self.power < 1.00:
             self.power = 1.00
-        if self.life > 5:
-            self.life = 5

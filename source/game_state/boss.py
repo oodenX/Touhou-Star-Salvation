@@ -73,8 +73,11 @@ class Boss:
         surface.blit(power_text, (740, 200))
 
         surface.blit(self.life_text, (680, 64))
-        for i in range(self.Marisa.life):
-            surface.blit(self.heart_image, (755 + i * 40, 54))
+        max_lives = min(self.Marisa.life, 10)  # Ensure no more than 10 lives are displayed
+        for i in range(max_lives):
+            row = i // 5
+            col = i % 5
+            surface.blit(self.heart_image, (755 + col * 40, 54 + row * 40))  # Adjust position as needed
 
     # 用来展示背景
     def show_background(self, surface):
@@ -209,12 +212,13 @@ class Boss:
             self.is_shot(bullet)
             if bullet.out_of_screen():
                 self.enemy_bullets.remove(bullet)
-
+    # 用来检查自己是否被击中的方法
     def is_shot(self, bullet):
         self.is_hurt(bullet.x, bullet.y, bullet.radius * bullet.radius)
         if self.calculate(bullet.x, bullet.y, bullet.radius * bullet.radius):
             self.enemy_bullets.remove(bullet)
 
+    # 用来是否打败boss
     def success(self):
         if self.Sanae.alive == False:
             self.next = 'success'

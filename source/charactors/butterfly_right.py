@@ -31,7 +31,7 @@ class ButterflyRight2(enemy.Enemy):
     def __init__(self, x, y, target_x, target_y, speed):
         images = []
         for i in range(1, 6):
-            temp = pygame.image.load('./resources/enemy/butterfly_down_' + str(i) + '.png')
+            temp = pygame.image.load('./resources/enemy/butterfly_right_' + str(i) + '.png')
             images.append(temp)
         super().__init__(x, y, target_x, target_y, 32, images, 200, speed)
         self.timer = pygame.time.get_ticks()
@@ -51,7 +51,7 @@ class ButterflyRight3(enemy.Enemy):
     def __init__(self, x, y, target_x, target_y, speed):
         images = []
         for i in range(1, 6):
-            temp = pygame.image.load('./resources/enemy/butterfly_down_' + str(i) + '.png')
+            temp = pygame.image.load('./resources/enemy/butterfly_right_' + str(i) + '.png')
             images.append(temp)
         super().__init__(x, y, target_x, target_y, 32, images, 200, speed)
         self.timer = pygame.time.get_ticks()

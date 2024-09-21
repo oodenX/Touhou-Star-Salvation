@@ -23,7 +23,7 @@ class Spirit7(enemy.Enemy):
         return pygame.Rect((x * 32, y * 32, 32, 32))
 
     def move(self):
-        if pygame.time.get_ticks() - self.move_timer > 1500:  # Change direction every 1.5 seconds
+        if pygame.time.get_ticks() - self.move_timer > 1500:
             self.move_timer = pygame.time.get_ticks()
             self.move_direction = random.choice(['left', 'right', 'up', 'down'])
 
@@ -36,7 +36,6 @@ class Spirit7(enemy.Enemy):
         elif self.move_direction == 'down':
             self.y += self.speed
 
-        # Ensure Spirit7 stays within the screen boundaries
         self.x = max(0, min(self.x, 640 - 32))
         self.y = max(0, min(self.y, 480 - 32))
 
@@ -47,7 +46,6 @@ class Spirit7(enemy.Enemy):
             self.times += 1
         if self.times == 30:
             self.times = 0
-            # Fire bullets in random directions
             for _ in range(10):
                 angle = random.uniform(0, 360)
                 enemy_bullets.append(GlowingBullet(self.x, self.y, angle, 3))

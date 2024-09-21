@@ -68,9 +68,11 @@ class Level:
         surface.blit(power_text, (740, 200))
 
         surface.blit(self.life_text, (680, 64))
-        for i in range(self.Marisa.life):
-            surface.blit(self.heart_image, (755 + i * 40, 54))
-
+        max_lives = min(self.Marisa.life, 10)  # Ensure no more than 10 lives are displayed
+        for i in range(max_lives):
+            row = i // 5
+            col = i % 5
+            surface.blit(self.heart_image, (755 + col * 40, 54 + row * 40))  # Adjust position as needed
     # 用来展示背景
     def show_background(self, surface):
         surface.blit(self.background1, (0, 0))
@@ -179,6 +181,7 @@ class Level:
                 self.Marisa.score += int(100 * self.Marisa.power)
             self.is_hurt(enemy.x, enemy.y, enemy.size * enemy.size)
 
+    # 用来更新弹幕
     def update_bullets(self, surface):
         for bullet in self.enemy_bullets:
             bullet.update(surface)
@@ -187,6 +190,7 @@ class Level:
             if bullet.out_of_screen():
                 self.enemy_bullets.remove(bullet)
 
+    # 用来判断是否被击中
     def is_shot(self, bullet):
         self.is_hurt(bullet.x, bullet.y, bullet.radius * bullet.radius)
         if self.calculate(bullet.x, bullet.y, bullet.radius * bullet.radius):
@@ -205,5 +209,6 @@ class Level:
         self.bonus()
         self.update_enemys(surface)
         self.update_bullets(surface)
-        if pygame.time.get_ticks() > 1 * C.s:
+        # 第60秒后进入boss阶段
+        if pygame.time.get_ticks() > 60 * C.s:
             self.finished = True

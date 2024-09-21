@@ -81,8 +81,7 @@ fire_image = './resources/player-fire/fire-'
 failure_image = './resources/background/failure.png'
 success_image = './resources/background/success.png'
 
-# Boss的图标以及背景
-boss_background = './resources/boss/background.png'
-boss_image = './resources/boss/sanae.png'
+# Boss背景
+boss_background = './resources/background/boss_background.png'
 
 speed = 1.0

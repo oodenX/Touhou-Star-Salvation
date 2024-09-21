@@ -321,11 +321,13 @@ class EnemySummon:
         if pygame.time.get_ticks() - self.timer > 18000 and self.twenty_two_down == False:
             self.twenty_two_down = True
             self.enemys.append(Spirit3Right2(40, 40, 640, 600, 1))
+            self.enemys.append(ButterflyRight3(20, 20, 640, 670, 1))
 
     def twenty_three(self):
         if pygame.time.get_ticks() - self.timer > 18000 and self.twenty_three_down == False:
             self.twenty_three_down = True
             self.enemys.append(Spirit3Left2(600, 40, 0, 600, 1))
+            self.enemys.append(ButterflyLeft3(620, 20, 0, 670, 1))
 
     def twenty_four(self):
         if pygame.time.get_ticks() - self.timer > 18500 and self.twenty_four_down == False:
@@ -400,8 +402,6 @@ class Summon(EnemySummon):
         self.thirty_seven_down = False
         self.thirty_eight_down = False
         self.thirty_nine_down = False
-
-
 
     def update(self):
         super().update()
